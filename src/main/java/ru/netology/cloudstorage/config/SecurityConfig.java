@@ -26,10 +26,10 @@ import javax.servlet.http.HttpServletResponse;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsServiceImpl;
-    // private final JwtTokenFilter jwtTokenFilter;
-    public SecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl) {
+    private final JwtTokenFilter jwtTokenFilter;
+    public SecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl, JwtTokenFilter jwtTokenFilter) {
         this.userDetailsServiceImpl = userDetailsServiceImpl;
-        // this.jwtTokenFilter = jwtTokenFilter;
+        this.jwtTokenFilter = jwtTokenFilter;
     }
 
     @Override
@@ -69,15 +69,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Set permissions on endpoints
         http
 
-                .authorizeRequests().antMatchers("/login").permitAll()
-//                .and().authorizeRequests().antMatchers("/logout").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-//                .and().authorizeRequests().antMatchers("/file").hasAuthority("ROLE_USER")
-//                .and().authorizeRequests().antMatchers("/list").hasAuthority("ROLE_USER")
+                .authorizeRequests().antMatchers("cloud/login").permitAll()
+//                .and().authorizeRequests().antMatchers("cloud/logout").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+//                .and().authorizeRequests().antMatchers("cloud/file").hasAuthority("ROLE_USER")
+//                .and().authorizeRequests().antMatchers("cloud/list").hasAuthority("ROLE_USER")
 //                .and().authorizeRequests().anyRequest().authenticated()
                 .and().formLogin();
 
         // Add JWT token filter
-        // http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     // Used by spring security if CORS is enabled.
