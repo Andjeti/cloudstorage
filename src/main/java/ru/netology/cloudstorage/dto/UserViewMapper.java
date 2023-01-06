@@ -1,12 +1,12 @@
 package ru.netology.cloudstorage.dto;
 
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mapstruct.Mapper;
 import ru.netology.cloudstorage.model.CloudUser;
 import ru.netology.cloudstorage.repository.UserRepository;
+
 import java.util.List;
 
-@Data
+@Mapper(componentModel = "spring")
 public abstract class UserViewMapper {
 
     private UserRepository userRepository;

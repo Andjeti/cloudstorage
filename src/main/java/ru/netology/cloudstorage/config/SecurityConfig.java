@@ -1,7 +1,5 @@
 package ru.netology.cloudstorage.config;
 
-import org.springframework.http.HttpMethod;
-import ru.netology.cloudstorage.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import ru.netology.cloudstorage.service.UserDetailsServiceImpl;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -69,12 +68,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Set permissions on endpoints
         http
 
-                .authorizeRequests().antMatchers("cloud/login").permitAll()
+                .authorizeRequests().antMatchers("cloud/login").permitAll();
 //                .and().authorizeRequests().antMatchers("cloud/logout").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
 //                .and().authorizeRequests().antMatchers("cloud/file").hasAuthority("ROLE_USER")
 //                .and().authorizeRequests().antMatchers("cloud/list").hasAuthority("ROLE_USER")
 //                .and().authorizeRequests().anyRequest().authenticated()
-                .and().formLogin();
+//                .and().formLogin();
 
         // Add JWT token filter
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
